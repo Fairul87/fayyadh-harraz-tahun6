@@ -1,0 +1,26 @@
+<!doctype html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Smart Belajar Fayyadh - Tahun 6</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#dbeafe,#fef3c7);min-height:100vh;color:#172033}.app{max-width:540px;margin:auto;padding:18px}.card{background:#fff;border-radius:24px;padding:22px;box-shadow:0 10px 30px #0002;margin-top:18px}h1{text-align:center;margin:4px 0 8px;font-size:28px}.sub{text-align:center;color:#64748b;margin-bottom:20px}input{width:100%;padding:14px;border:2px solid #dbeafe;border-radius:14px;font-size:17px}button{width:100%;border:0;border-radius:15px;padding:14px;margin-top:10px;font-size:17px;font-weight:700}.start{background:#2563eb;color:#fff}.opt{background:#f1f5f9}.correct{background:#bbf7d0!important}.wrong{background:#fecaca!important}.top{display:flex;justify-content:space-between;color:#475569;font-weight:700}.progress{height:10px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin:14px 0 20px}.bar{height:100%;background:#2563eb;width:0}.q{font-size:27px;font-weight:800;text-align:center;line-height:1.35;margin:24px 0}.feedback{text-align:center;font-weight:700;min-height:28px;margin-top:12px}.hidden{display:none}.result{text-align:center}.score{font-size:56px;font-weight:900;color:#2563eb}.small{text-align:center;color:#64748b;font-size:14px}</style></head><body><div class="app">
+<section id="home" class="card"><h1>🎓 Smart Belajar Fayyadh</h1><div class="sub">Matematik Tahun 6 • V1</div><input id="name" placeholder="Nama murid"><button class="start" onclick="start()">🚀 Mula Kuiz</button><p class="small">10 soalan • Tahap sederhana • Markah automatik</p></section>
+<section id="quiz" class="card hidden"><div class="top"><span id="student"></span><span id="count"></span></div><div class="progress"><div id="bar" class="bar"></div></div><div id="question" class="q"></div><div id="answers"></div><div id="feedback" class="feedback"></div></section>
+<section id="result" class="card result hidden"><h1>🎉 Kuiz Tamat!</h1><p id="resultName"></p><div id="score" class="score"></div><p id="message"></p><button class="start" onclick="start()">🔄 Cuba Lagi</button><button class="opt" onclick="home()">🏠 Menu Utama</button></section></div>
+<script>
+const questions=[
+["Berapakah 3,456 + 2,789?",["6,145","6,245","6,345","6,425"],1],
+["Berapakah 7,200 ÷ 9?",["700","800","900","1,000"],1],
+["Berapakah 3/4 daripada 20?",["12","15","16","18"],1],
+["0.75 bersamaan dengan berapa peratus?",["7.5%","25%","75%","750%"],2],
+["Sebuah buku berharga RM18.50. Jika dibayar dengan RM20, berapakah baki?",["RM1.00","RM1.50","RM2.50","RM3.50"],1],
+["2.5 m bersamaan dengan berapa sentimeter?",["25 cm","205 cm","250 cm","2,500 cm"],2],
+["Sebuah segi empat tepat mempunyai panjang 12 cm dan lebar 5 cm. Berapakah luasnya?",["17 cm²","34 cm²","60 cm²","120 cm²"],2],
+["Data bilangan buku dibaca oleh empat murid ialah 4, 7, 5 dan 4. Berapakah jumlah buku yang dibaca?",["18","19","20","21"],2],
+["Berapakah 25% daripada 80?",["15","20","25","40"],1],
+["Sebuah kelas mempunyai 24 murid. 3/8 daripada mereka menyertai kelab Matematik. Berapakah murid yang menyertai kelab itu?",["6","8","9","12"],2]
+];
+let current=0,score=0,locked=false;
+function start(){current=0;score=0;homeHide();document.getElementById("quiz").classList.remove("hidden");document.getElementById("student").textContent="👦 "+(document.getElementById("name").value.trim()||"Fayyadh");show()}
+function homeHide(){document.getElementById("home").classList.add("hidden");document.getElementById("result").classList.add("hidden")}
+function show(){locked=false;let q=questions[current];document.getElementById("count").textContent=(current+1)+"/10";document.getElementById("bar").style.width=(current*10)+"%";document.getElementById("question").textContent=q[0];document.getElementById("feedback").textContent="";let box=document.getElementById("answers");box.innerHTML="";q[1].forEach((x,i)=>{let b=document.createElement("button");b.className="opt";b.textContent=x;b.onclick=()=>answer(i,b);box.appendChild(b)})}
+function answer(i,btn){if(locked)return;locked=true;let q=questions[current];if(i===q[2]){score++;btn.classList.add("correct");document.getElementById("feedback").textContent="✅ Betul! Hebat!"}else{btn.classList.add("wrong");document.getElementById("feedback").textContent="❌ Belum tepat. Cuba lagi!";[...document.querySelectorAll(".opt")].forEach((b,j)=>{if(j===q[2])b.classList.add("correct")})}setTimeout(()=>{current++;current<questions.length?show():finish()},850)}
+function finish(){document.getElementById("quiz").classList.add("hidden");document.getElementById("result").classList.remove("hidden");let n=document.getElementById("name").value.trim()||"Fayyadh";document.getElementById("resultName").textContent="Syabas, "+n+"!";document.getElementById("score").textContent=score+" / 10";document.getElementById("message").textContent=score===10?"🏆 Cemerlang! Semua betul!":score>=8?"🌟 Sangat bagus!":score>=5?"👍 Bagus! Cuba lagi!":"💪 Jangan putus asa. Cuba lagi!"}
+function home(){document.getElementById("result").classList.add("hidden");document.getElementById("home").classList.remove("hidden")}
+</script></body></html>
