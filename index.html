@@ -1,26 +1,143 @@
-<!doctype html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Smart Belajar Fayyadh - Tahun 6</title><style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#dbeafe,#fef3c7);min-height:100vh;color:#172033}.app{max-width:540px;margin:auto;padding:18px}.card{background:#fff;border-radius:24px;padding:22px;box-shadow:0 10px 30px #0002;margin-top:18px}h1{text-align:center;margin:4px 0 8px;font-size:28px}.sub{text-align:center;color:#64748b;margin-bottom:20px}input{width:100%;padding:14px;border:2px solid #dbeafe;border-radius:14px;font-size:17px}button{width:100%;border:0;border-radius:15px;padding:14px;margin-top:10px;font-size:17px;font-weight:700}.start{background:#2563eb;color:#fff}.opt{background:#f1f5f9}.correct{background:#bbf7d0!important}.wrong{background:#fecaca!important}.top{display:flex;justify-content:space-between;color:#475569;font-weight:700}.progress{height:10px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin:14px 0 20px}.bar{height:100%;background:#2563eb;width:0}.q{font-size:27px;font-weight:800;text-align:center;line-height:1.35;margin:24px 0}.feedback{text-align:center;font-weight:700;min-height:28px;margin-top:12px}.hidden{display:none}.result{text-align:center}.score{font-size:56px;font-weight:900;color:#2563eb}.small{text-align:center;color:#64748b;font-size:14px}</style></head><body><div class="app">
-<section id="home" class="card"><h1>🎓 Smart Belajar Fayyadh</h1><div class="sub">Matematik Tahun 6 • V1</div><input id="name" placeholder="Nama murid"><button class="start" onclick="start()">🚀 Mula Kuiz</button><p class="small">10 soalan • Tahap sederhana • Markah automatik</p></section>
-<section id="quiz" class="card hidden"><div class="top"><span id="student"></span><span id="count"></span></div><div class="progress"><div id="bar" class="bar"></div></div><div id="question" class="q"></div><div id="answers"></div><div id="feedback" class="feedback"></div></section>
-<section id="result" class="card result hidden"><h1>🎉 Kuiz Tamat!</h1><p id="resultName"></p><div id="score" class="score"></div><p id="message"></p><button class="start" onclick="start()">🔄 Cuba Lagi</button><button class="opt" onclick="home()">🏠 Menu Utama</button></section></div>
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Belajar Fayyadh Harraz - Tahun 6</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#dbeafe,#fef3c7);color:#172554}
+.wrap{max-width:700px;margin:auto;padding:16px}.card{background:#fff;border-radius:24px;padding:24px;box-shadow:0 10px 30px #0002;margin-top:16px}
+h1{text-align:center;color:#1d4ed8;margin:5px 0}h2{text-align:center}.sub{text-align:center;color:#64748b}
+input{width:100%;padding:14px;border:2px solid #cbd5e1;border-radius:14px;font-size:16px;margin:12px 0 18px}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:14px}button{border:0;border-radius:16px;padding:15px;font-size:17px;font-weight:700;cursor:pointer}
+.subject{min-height:120px;color:#fff}.math{background:#2563eb}.science{background:#059669}.bm{background:#db2777}.eng{background:#7c3aed}
+.hidden{display:none}.progress{height:12px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin:15px 0}.bar{height:100%;background:#2563eb;width:0%;transition:.3s}
+.option{display:block;width:100%;margin:10px 0;text-align:left;background:#f1f5f9;color:#172554;border:2px solid #e2e8f0}
+.feedback{text-align:center;font-size:18px;font-weight:700;min-height:28px;margin:12px 0}.next{width:100%;background:#2563eb;color:#fff}.back{width:100%;background:#64748b;color:#fff;margin-top:12px}
+.score{text-align:center;font-size:25px;font-weight:700}.small{text-align:center;color:#64748b;font-size:14px}
+@media(max-width:500px){.menu{grid-template-columns:1fr}.card{padding:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section id="home" class="card">
+<h1>🎓 Smart Belajar Tahun 6</h1>
+<p class="sub">Fayyadh Harraz • Belajar & Kuiz</p>
+<input id="name" placeholder="Masukkan nama murid">
+<div class="menu">
+<button class="subject math" onclick="start('math')">🧮<br>Matematik</button>
+<button class="subject science" onclick="start('science')">🔬<br>Sains</button>
+<button class="subject bm" onclick="start('bm')">📖<br>Bahasa Melayu</button>
+<button class="subject eng" onclick="start('eng')">🇬🇧<br>English</button>
+</div>
+<p class="small">Pilih subjek untuk mula.</p>
+</section>
+
+<section id="quiz" class="card hidden">
+<h2 id="title"></h2><p id="welcome" class="sub"></p>
+<div class="progress"><div id="bar" class="bar"></div></div>
+<p id="count" class="small"></p><h2 id="question"></h2>
+<div id="options"></div><div id="feedback" class="feedback"></div>
+<button id="next" class="next hidden" onclick="next()">Soalan Seterusnya ➡️</button>
+<button class="back" onclick="home()">🏠 Menu Utama</button>
+</section>
+
+<section id="result" class="card hidden">
+<h1>🎉 Syabas!</h1><p id="resultText" class="score"></p><p id="stars" class="score"></p>
+<button class="next" onclick="again()">🔄 Cuba Lagi</button>
+<button class="back" onclick="home()">🏠 Menu Utama</button>
+</section>
+</div>
+
 <script>
-const questions=[
-["Berapakah 3,456 + 2,789?",["6,145","6,245","6,345","6,425"],1],
-["Berapakah 7,200 ÷ 9?",["700","800","900","1,000"],1],
-["Berapakah 3/4 daripada 20?",["12","15","16","18"],1],
-["0.75 bersamaan dengan berapa peratus?",["7.5%","25%","75%","750%"],2],
-["Sebuah buku berharga RM18.50. Jika dibayar dengan RM20, berapakah baki?",["RM1.00","RM1.50","RM2.50","RM3.50"],1],
-["2.5 m bersamaan dengan berapa sentimeter?",["25 cm","205 cm","250 cm","2,500 cm"],2],
-["Sebuah segi empat tepat mempunyai panjang 12 cm dan lebar 5 cm. Berapakah luasnya?",["17 cm²","34 cm²","60 cm²","120 cm²"],2],
-["Data bilangan buku dibaca oleh empat murid ialah 4, 7, 5 dan 4. Berapakah jumlah buku yang dibaca?",["18","19","20","21"],2],
-["Berapakah 25% daripada 80?",["15","20","25","40"],1],
-["Sebuah kelas mempunyai 24 murid. 3/8 daripada mereka menyertai kelab Matematik. Berapakah murid yang menyertai kelab itu?",["6","8","9","12"],2]
-];
-let current=0,score=0,locked=false;
-function start(){current=0;score=0;homeHide();document.getElementById("quiz").classList.remove("hidden");document.getElementById("student").textContent="👦 "+(document.getElementById("name").value.trim()||"Fayyadh");show()}
-function homeHide(){document.getElementById("home").classList.add("hidden");document.getElementById("result").classList.add("hidden")}
-function show(){locked=false;let q=questions[current];document.getElementById("count").textContent=(current+1)+"/10";document.getElementById("bar").style.width=(current*10)+"%";document.getElementById("question").textContent=q[0];document.getElementById("feedback").textContent="";let box=document.getElementById("answers");box.innerHTML="";q[1].forEach((x,i)=>{let b=document.createElement("button");b.className="opt";b.textContent=x;b.onclick=()=>answer(i,b);box.appendChild(b)})}
-function answer(i,btn){if(locked)return;locked=true;let q=questions[current];if(i===q[2]){score++;btn.classList.add("correct");document.getElementById("feedback").textContent="✅ Betul! Hebat!"}else{btn.classList.add("wrong");document.getElementById("feedback").textContent="❌ Belum tepat. Cuba lagi!";[...document.querySelectorAll(".opt")].forEach((b,j)=>{if(j===q[2])b.classList.add("correct")})}setTimeout(()=>{current++;current<questions.length?show():finish()},850)}
-function finish(){document.getElementById("quiz").classList.add("hidden");document.getElementById("result").classList.remove("hidden");let n=document.getElementById("name").value.trim()||"Fayyadh";document.getElementById("resultName").textContent="Syabas, "+n+"!";document.getElementById("score").textContent=score+" / 10";document.getElementById("message").textContent=score===10?"🏆 Cemerlang! Semua betul!":score>=8?"🌟 Sangat bagus!":score>=5?"👍 Bagus! Cuba lagi!":"💪 Jangan putus asa. Cuba lagi!"}
-function home(){document.getElementById("result").classList.add("hidden");document.getElementById("home").classList.remove("hidden")}
-</script></body></html>
+const data={
+math:{title:"🧮 Matematik Tahun 6",q:[
+["3,456 + 2,789 = ?",["6,145","6,245","6,345","6,445"],"6,245"],
+["7,200 ÷ 9 = ?",["700","800","900","1,000"],"800"],
+["3/4 daripada 20 ialah...",["10","12","15","18"],"15"],
+["0.75 bersamaan...",["7.5%","25%","75%","750%"],"75%"],
+["Harga barang RM18.50. Bayar RM20. Baki ialah...",["RM1.00","RM1.50","RM2.00","RM2.50"],"RM1.50"],
+["2.5 m bersamaan...",["25 cm","250 cm","2,500 cm","0.25 cm"],"250 cm"],
+["Luas segi empat tepat 12 cm × 5 cm ialah...",["17 cm²","30 cm²","60 cm²","120 cm²"],"60 cm²"],
+["4 + 7 + 5 + 4 = ?",["18","19","20","21"],"20"],
+["25% daripada 80 ialah...",["10","15","20","25"],"20"],
+["3/8 daripada 24 ialah...",["6","8","9","12"],"9"]
+]},
+science:{title:"🔬 Sains Tahun 6",q:[
+["Apakah proses tumbuhan menghasilkan makanan?",["Pencernaan","Fotosintesis","Penyejatan","Pernafasan"],"Fotosintesis"],
+["Organ utama sistem pernafasan manusia ialah...",["Jantung","Paru-paru","Perut","Buah pinggang"],"Paru-paru"],
+["Daya yang menarik objek ke arah Bumi ialah...",["Daya geseran","Daya graviti","Daya magnet","Daya apungan"],"Daya graviti"],
+["Bahan yang membenarkan cahaya melaluinya dengan jelas ialah...",["Legap","Lut sinar","Lut cahaya","Gelap"],"Lut sinar"],
+["Apakah sumber tenaga utama bagi Bumi?",["Bulan","Matahari","Angin","Air"],"Matahari"],
+["Litar elektrik yang lengkap membolehkan mentol...",["Berbunyi","Menyala","Membeku","Berputar"],"Menyala"],
+["Haiwan yang mempunyai tulang belakang dikenali sebagai...",["Invertebrata","Vertebrata","Serangga","Moluska"],"Vertebrata"],
+["Air berubah daripada cecair kepada gas melalui...",["Pembekuan","Peleburan","Penyejatan","Pemeluwapan"],"Penyejatan"],
+["Planet yang dikenali sebagai Planet Merah ialah...",["Bumi","Marikh","Zuhal","Utarid"],"Marikh"],
+["Magnet boleh menarik objek yang diperbuat daripada...",["Kayu","Kertas","Besi","Plastik"],"Besi"]
+]},
+bm:{title:"📖 Bahasa Melayu Tahun 6",q:[
+["Pilih kata adjektif dalam ayat: 'Rumah itu sangat besar.'",["Rumah","itu","sangat","besar"],"besar"],
+["Lawan bagi perkataan 'rajin' ialah...",["pandai","malas","cekap","jujur"],"malas"],
+["Pilih kata kerja: 'Aiman membaca buku.'",["Aiman","membaca","buku","itu"],"membaca"],
+["Simpulan bahasa 'ringan tulang' bermaksud...",["Suka bergaduh","Rajin bekerja","Suka tidur","Cepat berlari"],"Rajin bekerja"],
+["Pilih penjodoh bilangan yang sesuai: se____ bunga.",["buah","batang","kuntum","ekor"],"kuntum"],
+["Ayat manakah menggunakan kata ganda yang betul?",["Buku-buku itu tersusun.","Buku buku itu tersusun.","Bukubuku itu tersusun.","Buku-buku itu tersusun-susun."],"Buku-buku itu tersusun."],
+["'Kerana hujan lebat, perlawanan ditangguhkan.' Kata hubung ialah...",["kerana","hujan","lebat","ditangguhkan"],"kerana"],
+["Pilih peribahasa yang bermaksud bekerjasama.",["Bagai aur dengan tebing","Bagai kacang lupakan kulit","Seperti katak di bawah tempurung","Harapkan pagar, pagar makan padi"],"Bagai aur dengan tebing"],
+["Kata nama khas yang betul ialah...",["sekolah","guru","Malaysia","murid"],"Malaysia"],
+["Pilih ayat yang betul.",["Mereka-mereka sedang bermain.","Mereka sedang bermain.","Mereka sedang bermain-mainkan.","Mereka sedang di bermain."],"Mereka sedang bermain."]
+]},
+eng:{title:"🇬🇧 English Year 6",q:[
+["Choose the correct sentence.",["She go to school.","She goes to school.","She going school.","She gone school."],"She goes to school."],
+["What is the opposite of 'ancient'?",["Old","Modern","Past","Early"],"Modern"],
+["Choose the correct word: Ali is good ___ Mathematics.",["in","on","at","for"],"at"],
+["Past tense of 'go' is...",["goed","goes","went","going"],"went"],
+["Which is a noun?",["Beautiful","Quickly","Teacher","Run"],"Teacher"],
+["Complete: They ___ playing football.",["is","am","are","be"],"are"],
+["Choose the correct plural: one child, two...",["childs","children","childes","childrens"],"children"],
+["'The boy was tired because he ran far.' Why was he tired?",["He slept","He ran far","He ate","He studied"],"He ran far"],
+["Choose the correct spelling.",["beautiful","beautifull","beautifol","beautifull"],"beautiful"],
+["What does 'delicious' mean?",["Very tasty","Very cold","Very noisy","Very small"],"Very tasty"]
+]}
+};
+
+let quiz,index=0,score=0,locked=false;
+function start(key){
+ const n=document.getElementById('name').value.trim();
+ if(!n){alert("Sila masukkan nama murid dahulu 😊");return}
+ quiz=data[key];index=0;score=0;
+ home(false);document.getElementById('quiz').classList.remove('hidden');
+ document.getElementById('title').textContent=quiz.title;
+ document.getElementById('welcome').textContent="Selamat belajar, "+n+"! 💪";
+ show();
+}
+function show(){
+ locked=false;let x=quiz.q[index];
+ document.getElementById('count').textContent=`Soalan ${index+1} / ${quiz.q.length}`;
+ document.getElementById('bar').style.width=(index/quiz.q.length*100)+"%";
+ document.getElementById('question').textContent=x[0];
+ let box=document.getElementById('options');box.innerHTML="";
+ x[1].forEach(o=>{let b=document.createElement('button');b.className="option";b.textContent=o;b.onclick=()=>answer(b,o);box.appendChild(b)});
+ document.getElementById('feedback').textContent="";
+ document.getElementById('next').classList.add('hidden');
+}
+function answer(btn,o){
+ if(locked)return;locked=true;
+ let correct=quiz.q[index][2];
+ document.querySelectorAll('.option').forEach(b=>b.disabled=true);
+ if(o===correct){score++;btn.style.background="#bbf7d0";btn.style.borderColor="#16a34a";document.getElementById('feedback').textContent="✅ Betul! Hebat!"}
+ else{btn.style.background="#fecaca";btn.style.borderColor="#dc2626";document.getElementById('feedback').textContent="❌ Belum tepat. Jawapan: "+correct}
+ document.getElementById('bar').style.width=((index+1)/quiz.q.length*100)+"%";
+ document.getElementById('next').classList.remove('hidden');
+}
+function next(){if(index<quiz.q.length-1){index++;show()}else result()}
+function result(){
+ document.getElementById('quiz').classList.add('hidden');document.getElementById('result').classList.remove('hidden');
+ document.getElementById('resultText').textContent=`Markah: ${score} / ${quiz.q.length}`;
+ document.getElementById('stars').textContent=score>=9?"⭐⭐⭐⭐⭐":score>=7?"⭐⭐⭐⭐":score>=5?"⭐⭐⭐":score>=3?"⭐⭐":"⭐";
+}
+function again(){document.getElementById('result').classList.add('hidden');document.getElementById('quiz').classList.remove('hidden');index=0;score=0;show()}
+function home(showHome=true){document.getElementById('quiz').classList.add('hidden');document.getElementById('result').classList.add('hidden');if(showHome)document.getElementById('home').classList.remove('hidden')}
+</script>
+</body>
+</html>
