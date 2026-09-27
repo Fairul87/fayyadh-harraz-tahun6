@@ -1,28 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ms">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Smart Belajar Fayyadh Harraz - Tahun 6</title>
+<title>Smart Belajar Tahun 6 - Next Level</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#dbeafe,#fef3c7);color:#172554}
-.wrap{max-width:700px;margin:auto;padding:16px}.card{background:#fff;border-radius:24px;padding:24px;box-shadow:0 10px 30px #0002;margin-top:16px}
-h1{text-align:center;color:#1d4ed8;margin:5px 0}h2{text-align:center}.sub{text-align:center;color:#64748b}
-input{width:100%;padding:14px;border:2px solid #cbd5e1;border-radius:14px;font-size:16px;margin:12px 0 18px}
-.menu{display:grid;grid-template-columns:1fr 1fr;gap:14px}button{border:0;border-radius:16px;padding:15px;font-size:17px;font-weight:700;cursor:pointer}
-.subject{min-height:120px;color:#fff}.math{background:#2563eb}.science{background:#059669}.bm{background:#db2777}.eng{background:#7c3aed}
-.hidden{display:none}.progress{height:12px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin:15px 0}.bar{height:100%;background:#2563eb;width:0%;transition:.3s}
-.option{display:block;width:100%;margin:10px 0;text-align:left;background:#f1f5f9;color:#172554;border:2px solid #e2e8f0}
-.feedback{text-align:center;font-size:18px;font-weight:700;min-height:28px;margin:12px 0}.next{width:100%;background:#2563eb;color:#fff}.back{width:100%;background:#64748b;color:#fff;margin-top:12px}
-.score{text-align:center;font-size:25px;font-weight:700}.small{text-align:center;color:#64748b;font-size:14px}
-@media(max-width:500px){.menu{grid-template-columns:1fr}.card{padding:18px}}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#dbeafe,#fef3c7);color:#172554}.wrap{max-width:700px;margin:auto;padding:15px}.card{background:#fff;border-radius:24px;padding:22px;box-shadow:0 10px 30px #0002;margin-top:15px}h1,h2{text-align:center}h1{color:#1d4ed8}.sub,.small{text-align:center;color:#64748b}input{width:100%;padding:14px;border:2px solid #cbd5e1;border-radius:14px;font-size:16px;margin:10px 0 16px}.menu{display:grid;grid-template-columns:1fr 1fr;gap:13px}button{border:0;border-radius:15px;padding:14px;font-size:16px;font-weight:700;cursor:pointer}.subject{color:white;min-height:110px}.math{background:#2563eb}.science{background:#059669}.bm{background:#db2777}.eng{background:#7c3aed}.hidden{display:none}.stats{display:flex;gap:8px;margin:10px 0}.stat{flex:1;text-align:center;background:#f1f5f9;padding:9px;border-radius:12px;font-weight:700}.progress{height:12px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin:12px 0}.bar{height:100%;background:#2563eb;width:0;transition:.3s}.option{display:block;width:100%;margin:9px 0;text-align:left;background:#f8fafc;color:#172554;border:2px solid #e2e8f0}.feedback{text-align:center;font-weight:700;min-height:28px;margin:10px}.next,.again{width:100%;background:#2563eb;color:white}.back{width:100%;background:#64748b;color:white;margin-top:10px}.score{text-align:center;font-size:24px;font-weight:700}.achievement{background:#fef3c7;border-radius:16px;padding:14px;text-align:center;font-weight:700}@media(max-width:500px){.menu{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <section id="home" class="card">
 <h1>🎓 Smart Belajar Tahun 6</h1>
-<p class="sub">Fayyadh Harraz • Belajar & Kuiz</p>
+<p class="sub">🚀 NEXT LEVEL • XP • STREAK • PENCAPAIAN</p>
 <input id="name" placeholder="Masukkan nama murid">
 <div class="menu">
 <button class="subject math" onclick="start('math')">🧮<br>Matematik</button>
@@ -30,114 +20,32 @@ input{width:100%;padding:14px;border:2px solid #cbd5e1;border-radius:14px;font-s
 <button class="subject bm" onclick="start('bm')">📖<br>Bahasa Melayu</button>
 <button class="subject eng" onclick="start('eng')">🇬🇧<br>English</button>
 </div>
-<p class="small">Pilih subjek untuk mula.</p>
+<p class="small">15 soalan setiap subjek • Kumpul XP dan bintang ⭐</p>
 </section>
-
 <section id="quiz" class="card hidden">
 <h2 id="title"></h2><p id="welcome" class="sub"></p>
+<div class="stats"><div class="stat">⭐ XP<br><span id="xp">0</span></div><div class="stat">🔥 Streak<br><span id="streak">0</span></div><div class="stat">❤️ Nyawa<br><span id="lives">3</span></div></div>
 <div class="progress"><div id="bar" class="bar"></div></div>
-<p id="count" class="small"></p><h2 id="question"></h2>
-<div id="options"></div><div id="feedback" class="feedback"></div>
-<button id="next" class="next hidden" onclick="next()">Soalan Seterusnya ➡️</button>
-<button class="back" onclick="home()">🏠 Menu Utama</button>
+<p id="count" class="small"></p><h2 id="question"></h2><div id="options"></div><div id="feedback" class="feedback"></div>
+<button id="next" class="next hidden" onclick="nextQ()">Soalan Seterusnya ➡️</button>
+<button class="back" onclick="goHome()">🏠 Menu Utama</button>
 </section>
-
 <section id="result" class="card hidden">
-<h1>🎉 Syabas!</h1><p id="resultText" class="score"></p><p id="stars" class="score"></p>
-<button class="next" onclick="again()">🔄 Cuba Lagi</button>
-<button class="back" onclick="home()">🏠 Menu Utama</button>
+<h1>🏆 TAMAT!</h1><p id="resultText" class="score"></p><p id="resultXP" class="score"></p>
+<div id="achievement" class="achievement"></div><p id="stars" class="score"></p>
+<button class="again" onclick="again()">🔄 Cuba Lagi</button><button class="back" onclick="goHome()">🏠 Menu Utama</button>
 </section>
 </div>
-
 <script>
-const data={
-math:{title:"🧮 Matematik Tahun 6",q:[
-["3,456 + 2,789 = ?",["6,145","6,245","6,345","6,445"],"6,245"],
-["7,200 ÷ 9 = ?",["700","800","900","1,000"],"800"],
-["3/4 daripada 20 ialah...",["10","12","15","18"],"15"],
-["0.75 bersamaan...",["7.5%","25%","75%","750%"],"75%"],
-["Harga barang RM18.50. Bayar RM20. Baki ialah...",["RM1.00","RM1.50","RM2.00","RM2.50"],"RM1.50"],
-["2.5 m bersamaan...",["25 cm","250 cm","2,500 cm","0.25 cm"],"250 cm"],
-["Luas segi empat tepat 12 cm × 5 cm ialah...",["17 cm²","30 cm²","60 cm²","120 cm²"],"60 cm²"],
-["4 + 7 + 5 + 4 = ?",["18","19","20","21"],"20"],
-["25% daripada 80 ialah...",["10","15","20","25"],"20"],
-["3/8 daripada 24 ialah...",["6","8","9","12"],"9"]
-]},
-science:{title:"🔬 Sains Tahun 6",q:[
-["Apakah proses tumbuhan menghasilkan makanan?",["Pencernaan","Fotosintesis","Penyejatan","Pernafasan"],"Fotosintesis"],
-["Organ utama sistem pernafasan manusia ialah...",["Jantung","Paru-paru","Perut","Buah pinggang"],"Paru-paru"],
-["Daya yang menarik objek ke arah Bumi ialah...",["Daya geseran","Daya graviti","Daya magnet","Daya apungan"],"Daya graviti"],
-["Bahan yang membenarkan cahaya melaluinya dengan jelas ialah...",["Legap","Lut sinar","Lut cahaya","Gelap"],"Lut sinar"],
-["Apakah sumber tenaga utama bagi Bumi?",["Bulan","Matahari","Angin","Air"],"Matahari"],
-["Litar elektrik yang lengkap membolehkan mentol...",["Berbunyi","Menyala","Membeku","Berputar"],"Menyala"],
-["Haiwan yang mempunyai tulang belakang dikenali sebagai...",["Invertebrata","Vertebrata","Serangga","Moluska"],"Vertebrata"],
-["Air berubah daripada cecair kepada gas melalui...",["Pembekuan","Peleburan","Penyejatan","Pemeluwapan"],"Penyejatan"],
-["Planet yang dikenali sebagai Planet Merah ialah...",["Bumi","Marikh","Zuhal","Utarid"],"Marikh"],
-["Magnet boleh menarik objek yang diperbuat daripada...",["Kayu","Kertas","Besi","Plastik"],"Besi"]
-]},
-bm:{title:"📖 Bahasa Melayu Tahun 6",q:[
-["Pilih kata adjektif dalam ayat: 'Rumah itu sangat besar.'",["Rumah","itu","sangat","besar"],"besar"],
-["Lawan bagi perkataan 'rajin' ialah...",["pandai","malas","cekap","jujur"],"malas"],
-["Pilih kata kerja: 'Aiman membaca buku.'",["Aiman","membaca","buku","itu"],"membaca"],
-["Simpulan bahasa 'ringan tulang' bermaksud...",["Suka bergaduh","Rajin bekerja","Suka tidur","Cepat berlari"],"Rajin bekerja"],
-["Pilih penjodoh bilangan yang sesuai: se____ bunga.",["buah","batang","kuntum","ekor"],"kuntum"],
-["Ayat manakah menggunakan kata ganda yang betul?",["Buku-buku itu tersusun.","Buku buku itu tersusun.","Bukubuku itu tersusun.","Buku-buku itu tersusun-susun."],"Buku-buku itu tersusun."],
-["'Kerana hujan lebat, perlawanan ditangguhkan.' Kata hubung ialah...",["kerana","hujan","lebat","ditangguhkan"],"kerana"],
-["Pilih peribahasa yang bermaksud bekerjasama.",["Bagai aur dengan tebing","Bagai kacang lupakan kulit","Seperti katak di bawah tempurung","Harapkan pagar, pagar makan padi"],"Bagai aur dengan tebing"],
-["Kata nama khas yang betul ialah...",["sekolah","guru","Malaysia","murid"],"Malaysia"],
-["Pilih ayat yang betul.",["Mereka-mereka sedang bermain.","Mereka sedang bermain.","Mereka sedang bermain-mainkan.","Mereka sedang di bermain."],"Mereka sedang bermain."]
-]},
-eng:{title:"🇬🇧 English Year 6",q:[
-["Choose the correct sentence.",["She go to school.","She goes to school.","She going school.","She gone school."],"She goes to school."],
-["What is the opposite of 'ancient'?",["Old","Modern","Past","Early"],"Modern"],
-["Choose the correct word: Ali is good ___ Mathematics.",["in","on","at","for"],"at"],
-["Past tense of 'go' is...",["goed","goes","went","going"],"went"],
-["Which is a noun?",["Beautiful","Quickly","Teacher","Run"],"Teacher"],
-["Complete: They ___ playing football.",["is","am","are","be"],"are"],
-["Choose the correct plural: one child, two...",["childs","children","childes","childrens"],"children"],
-["'The boy was tired because he ran far.' Why was he tired?",["He slept","He ran far","He ate","He studied"],"He ran far"],
-["Choose the correct spelling.",["beautiful","beautifull","beautifol","beautifull"],"beautiful"],
-["What does 'delicious' mean?",["Very tasty","Very cold","Very noisy","Very small"],"Very tasty"]
-]}
-};
-
-let quiz,index=0,score=0,locked=false;
-function start(key){
- const n=document.getElementById('name').value.trim();
- if(!n){alert("Sila masukkan nama murid dahulu 😊");return}
- quiz=data[key];index=0;score=0;
- home(false);document.getElementById('quiz').classList.remove('hidden');
- document.getElementById('title').textContent=quiz.title;
- document.getElementById('welcome').textContent="Selamat belajar, "+n+"! 💪";
- show();
-}
-function show(){
- locked=false;let x=quiz.q[index];
- document.getElementById('count').textContent=`Soalan ${index+1} / ${quiz.q.length}`;
- document.getElementById('bar').style.width=(index/quiz.q.length*100)+"%";
- document.getElementById('question').textContent=x[0];
- let box=document.getElementById('options');box.innerHTML="";
- x[1].forEach(o=>{let b=document.createElement('button');b.className="option";b.textContent=o;b.onclick=()=>answer(b,o);box.appendChild(b)});
- document.getElementById('feedback').textContent="";
- document.getElementById('next').classList.add('hidden');
-}
-function answer(btn,o){
- if(locked)return;locked=true;
- let correct=quiz.q[index][2];
- document.querySelectorAll('.option').forEach(b=>b.disabled=true);
- if(o===correct){score++;btn.style.background="#bbf7d0";btn.style.borderColor="#16a34a";document.getElementById('feedback').textContent="✅ Betul! Hebat!"}
- else{btn.style.background="#fecaca";btn.style.borderColor="#dc2626";document.getElementById('feedback').textContent="❌ Belum tepat. Jawapan: "+correct}
- document.getElementById('bar').style.width=((index+1)/quiz.q.length*100)+"%";
- document.getElementById('next').classList.remove('hidden');
-}
-function next(){if(index<quiz.q.length-1){index++;show()}else result()}
-function result(){
- document.getElementById('quiz').classList.add('hidden');document.getElementById('result').classList.remove('hidden');
- document.getElementById('resultText').textContent=`Markah: ${score} / ${quiz.q.length}`;
- document.getElementById('stars').textContent=score>=9?"⭐⭐⭐⭐⭐":score>=7?"⭐⭐⭐⭐":score>=5?"⭐⭐⭐":score>=3?"⭐⭐":"⭐";
-}
-function again(){document.getElementById('result').classList.add('hidden');document.getElementById('quiz').classList.remove('hidden');index=0;score=0;show()}
-function home(showHome=true){document.getElementById('quiz').classList.add('hidden');document.getElementById('result').classList.add('hidden');if(showHome)document.getElementById('home').classList.remove('hidden')}
+const data={"math": {"title": "🧮 Matematik Tahun 6", "q": [["3,456 + 2,789 = ?", ["6,145", "6,245", "6,345", "6,445"], "6,245"], ["7,200 ÷ 9 = ?", ["700", "800", "900", "1,000"], "800"], ["3/4 daripada 20 ialah...", ["10", "12", "15", "18"], "15"], ["0.75 bersamaan...", ["7.5%", "25%", "75%", "750%"], "75%"], ["RM20 - RM18.50 = ?", ["RM1.00", "RM1.50", "RM2.00", "RM2.50"], "RM1.50"], ["2.5 m = ?", ["25 cm", "250 cm", "2,500 cm", "0.25 cm"], "250 cm"], ["Luas 12 cm × 5 cm ialah...", ["17 cm²", "30 cm²", "60 cm²", "120 cm²"], "60 cm²"], ["4 + 7 + 5 + 4 = ?", ["18", "19", "20", "21"], "20"], ["25% daripada 80 ialah...", ["10", "15", "20", "25"], "20"], ["3/8 daripada 24 ialah...", ["6", "8", "9", "12"], "9"], ["2.5 + 1.75 = ?", ["3.25", "4.00", "4.25", "4.75"], "4.25"], ["40% daripada 150 ialah...", ["40", "50", "60", "70"], "60"], ["Nisbah 2:3. Jumlah 25. Bahagian pertama ialah...", ["8", "10", "12", "15"], "10"], ["Purata 6, 8 dan 10 ialah...", ["7", "8", "9", "10"], "8"], ["1.2 kg = ____ g", ["12", "120", "1,200", "12,000"], "1,200"]]}, "science": {"title": "🔬 Sains Tahun 6", "q": [["Proses tumbuhan menghasilkan makanan ialah...", ["Pencernaan", "Fotosintesis", "Penyejatan", "Pernafasan"], "Fotosintesis"], ["Organ utama pernafasan manusia ialah...", ["Jantung", "Paru-paru", "Perut", "Buah pinggang"], "Paru-paru"], ["Daya menarik objek ke arah Bumi ialah...", ["Geseran", "Graviti", "Magnet", "Apungan"], "Graviti"], ["Bahan yang membenarkan cahaya melaluinya dengan jelas ialah...", ["Legap", "Lut sinar", "Gelap", "Kasar"], "Lut sinar"], ["Sumber tenaga utama Bumi ialah...", ["Bulan", "Matahari", "Angin", "Air"], "Matahari"], ["Litar elektrik lengkap membolehkan mentol...", ["Berbunyi", "Menyala", "Membeku", "Berputar"], "Menyala"], ["Haiwan bertulang belakang ialah...", ["Invertebrata", "Vertebrata", "Serangga", "Moluska"], "Vertebrata"], ["Cecair menjadi gas melalui...", ["Pembekuan", "Peleburan", "Penyejatan", "Pemeluwapan"], "Penyejatan"], ["Planet Merah ialah...", ["Bumi", "Marikh", "Zuhal", "Utarid"], "Marikh"], ["Magnet menarik objek daripada...", ["Kayu", "Kertas", "Besi", "Plastik"], "Besi"], ["Gas menjadi cecair melalui...", ["Penyejatan", "Pemeluwapan", "Pembekuan", "Peleburan"], "Pemeluwapan"], ["Bayang-bayang terbentuk apabila cahaya...", ["Dihalang objek", "Menjadi air", "Hilang", "Membeku"], "Dihalang objek"], ["Tumbuhan menyerap karbon dioksida melalui...", ["Akar", "Daun", "Bunga", "Buah"], "Daun"], ["Bunyi terhasil daripada objek yang...", ["Bergetar", "Membeku", "Cair", "Diam"], "Bergetar"], ["Tenaga tersimpan dalam makanan ialah tenaga...", ["Kimia", "Bunyi", "Cahaya", "Elektrik"], "Kimia"]]}, "bm": {"title": "📖 Bahasa Melayu Tahun 6", "q": [["Kata adjektif dalam 'Rumah itu sangat besar' ialah...", ["Rumah", "itu", "sangat", "besar"], "besar"], ["Lawan 'rajin' ialah...", ["pandai", "malas", "cekap", "jujur"], "malas"], ["Kata kerja dalam 'Aiman membaca buku' ialah...", ["Aiman", "membaca", "buku", "itu"], "membaca"], ["'Ringan tulang' bermaksud...", ["Suka bergaduh", "Rajin bekerja", "Suka tidur", "Cepat berlari"], "Rajin bekerja"], ["Penjodoh bilangan: se____ bunga.", ["buah", "batang", "kuntum", "ekor"], "kuntum"], ["Ayat yang betul ialah...", ["Mereka-mereka bermain.", "Mereka sedang bermain.", "Mereka sedang bermainkan.", "Mereka di bermain."], "Mereka sedang bermain."], ["Kata hubung dalam ayat 'Kerana hujan lebat, perlawanan ditangguhkan.' ialah...", ["kerana", "hujan", "lebat", "ditangguhkan"], "kerana"], ["Peribahasa bermaksud bekerjasama ialah...", ["Bagai aur dengan tebing", "Bagai kacang lupakan kulit", "Katak di bawah tempurung", "Pagar makan padi"], "Bagai aur dengan tebing"], ["Kata nama khas ialah...", ["sekolah", "guru", "Malaysia", "murid"], "Malaysia"], ["Kata adjektif ialah...", ["berlari", "cantik", "sekolah", "membaca"], "cantik"], ["Lawan 'jujur' ialah...", ["amanah", "bohong", "baik", "rajin"], "bohong"], ["Kata ganda yang betul ialah...", ["murid-murid", "murid murid", "muridmurid", "murid-murid-murid"], "murid-murid"], ["'Buah tangan' bermaksud...", ["Hasil tangan", "Hadiah yang dibawa", "Buah-buahan", "Kerja tangan"], "Hadiah yang dibawa"], ["Ayat tanya biasanya diakhiri tanda...", ["noktah", "seru", "soal", "koma"], "soal"], ["Buku itu ____ atas meja.", ["di", "ke", "daripada", "kepada"], "di"]]}, "eng": {"title": "🇬🇧 English Year 6", "q": [["Choose the correct sentence.", ["She go to school.", "She goes to school.", "She going school.", "She gone school."], "She goes to school."], ["Opposite of 'ancient' is...", ["Old", "Modern", "Past", "Early"], "Modern"], ["Ali is good ___ Mathematics.", ["in", "on", "at", "for"], "at"], ["Past tense of 'go' is...", ["goed", "goes", "went", "going"], "went"], ["Which is a noun?", ["Beautiful", "Quickly", "Teacher", "Run"], "Teacher"], ["They ___ playing football.", ["is", "am", "are", "be"], "are"], ["Plural of child is...", ["childs", "children", "childes", "childrens"], "children"], ["Why was the boy tired? He ran far.", ["He slept", "He ran far", "He ate", "He studied"], "He ran far"], ["Correct spelling:", ["beautiful", "beautifull", "beautifol", "beautifull"], "beautiful"], ["'Delicious' means...", ["Very tasty", "Very cold", "Very noisy", "Very small"], "Very tasty"], ["If it rains, we ___ stay home.", ["will", "would", "are", "has"], "will"], ["I have ___ apple.", ["a", "an", "the", "some"], "an"], ["Comparative of 'good' is...", ["gooder", "best", "better", "more good"], "better"], ["She has lived here ___ 2020.", ["for", "since", "at", "on"], "since"], ["Choose the correct question.", ["Where you live?", "Where do you live?", "Where does you live?", "Where living you?"], "Where do you live?"]]}};
+let quiz=null,index=0,score=0,xp=0,streak=0,lives=3,locked=false;
+function start(k){const n=document.getElementById("name").value.trim();if(!n){alert("Sila masukkan nama murid dahulu 😊");return}quiz=data[k];index=score=xp=streak=0;lives=3;document.getElementById("home").classList.add("hidden");document.getElementById("result").classList.add("hidden");document.getElementById("quiz").classList.remove("hidden");document.getElementById("title").textContent=quiz.title;document.getElementById("welcome").textContent="Selamat belajar, "+n+"! 💪";showQ()}
+function showQ(){locked=false;const x=quiz.q[index];document.getElementById("count").textContent="Soalan "+(index+1)+" / "+quiz.q.length;document.getElementById("bar").style.width=(index/quiz.q.length*100)+"%";document.getElementById("question").textContent=x[0];const box=document.getElementById("options");box.innerHTML="";x[1].forEach(function(o){const b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=function(){answer(b,o)};box.appendChild(b)});document.getElementById("feedback").textContent="";document.getElementById("next").classList.add("hidden");stats()}
+function answer(btn,o){if(locked)return;locked=true;const correct=quiz.q[index][2];document.querySelectorAll(".option").forEach(function(b){b.disabled=true});if(o===correct){score++;streak++;xp+=10+(streak>=3?5:0);btn.style.background="#bbf7d0";btn.style.borderColor="#16a34a";document.getElementById("feedback").textContent=streak>=3?"🔥 Streak hebat! +XP bonus!":"✅ Betul! +10 XP"}else{streak=0;lives=Math.max(0,lives-1);btn.style.background="#fecaca";btn.style.borderColor="#dc2626";document.getElementById("feedback").textContent="❌ Belum tepat. Jawapan: "+correct}document.getElementById("bar").style.width=((index+1)/quiz.q.length*100)+"%";document.getElementById("next").classList.remove("hidden");stats()}
+function stats(){document.getElementById("xp").textContent=xp;document.getElementById("streak").textContent=streak;document.getElementById("lives").textContent=lives}
+function nextQ(){if(index<quiz.q.length-1){index++;showQ()}else result()}
+function result(){document.getElementById("quiz").classList.add("hidden");document.getElementById("result").classList.remove("hidden");const total=quiz.q.length;document.getElementById("resultText").textContent="Markah: "+score+" / "+total;document.getElementById("resultXP").textContent="XP: "+xp+" ⭐";document.getElementById("stars").textContent=score>=13?"⭐⭐⭐⭐⭐":score>=10?"⭐⭐⭐⭐":score>=7?"⭐⭐⭐":score>=4?"⭐⭐":"⭐";document.getElementById("achievement").textContent=score===total?"🏅 PERFECT SCORE! Semua betul!":score>=13?"🏆 MASTER! Prestasi sangat baik!":score>=10?"🥇 HEBAT! Teruskan usaha!":score>=7?"🥈 BAGUS! Cuba lagi untuk naik tahap!":"💪 TERUSKAN LATIHAN! Kamu boleh!"}
+function again(){document.getElementById("result").classList.add("hidden");document.getElementById("quiz").classList.remove("hidden");index=score=xp=streak=0;lives=3;showQ()}
+function goHome(){document.getElementById("quiz").classList.add("hidden");document.getElementById("result").classList.add("hidden");document.getElementById("home").classList.remove("hidden")}
 </script>
-</body>
-</html>
+</body></html>
